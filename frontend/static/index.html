@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IP Geolocation Lookup</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>" />
+    <!-- Подключение Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Подключение вашего файла стилей -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-md w-full bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700">
+        <h1 class="text-2xl font-bold mb-6 text-center text-blue-400">IP Info Tracker</h1>
+
+        <div class="flex flex-col gap-4 mb-8">
+            <input type="text" id="ipInput" placeholder="Enter IP Address (e.g. 8.8.8.8)"
+                   class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition-all outline-none" />
+
+            <button id="searchBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 flex justify-center items-center">
+                Lookup IP
+            </button>
+        </div>
+
+        <div id="resultWrapper" class="hidden space-y-4">
+            <hr class="border-gray-700 my-4" />
+            <div id="results" class="grid grid-cols-2 gap-4 text-sm"></div>
+            <button id="viewMapBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 flex justify-center items-center mt-4">
+                View Map
+            </button>
+        </div>
+
+        <div id="errorBox" class="hidden mt-4 p-3 bg-red-900/30 border border-red-500 text-red-400 rounded-lg text-sm text-center"></div>
+    </div>
+
+    <!-- Подключение скрипта -->
+    <script src="js/script.js"></script>
+</body>
+</html>
