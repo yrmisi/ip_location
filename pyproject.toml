@@ -49,7 +49,6 @@ force-exclude = '''
 
 [tool.ruff]
 line-length = 100
-extend-exclude = ["alembic"]
 
 [tool.ruff.format]
 quote-style = "double"
