@@ -19,7 +19,7 @@ async def create_ip_info(
 ) -> dict[str, str | float]:
     try:
         ip_info_service: IPInfoService = IPInfoService(request.ip_address, session)
-        ip_info: IPInfo = await ip_info_service.get_info_ip
+        ip_info: IPInfo = await ip_info_service.get_info_ip()
         return asdict(ip_info)
     except HTTPError as exc:
         print(f"HTTP error occurred: {exc}")

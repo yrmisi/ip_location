@@ -1,5 +1,5 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.models import IPCache
 from app.schemas import IPInfo
@@ -19,7 +19,7 @@ class IPCacheRepository:
     ) -> None:
         """ """
         result = await self.session.execute(select(IPCache).where(IPCache.ip == ip_address))
-        ip_cache = result.scalar_one_or_none()
+        ip_cache: IPCache | None = result.scalar_one_or_none()
 
         if ip_cache:
             ip_cache.lat = ip_data.lat
