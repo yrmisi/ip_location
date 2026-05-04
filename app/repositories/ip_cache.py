@@ -1,12 +1,14 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.models import IPCache
 from app.schemas import IPInfo
 
 
 class IPCacheRepository:
-    """ """
+    """
+    Repository for managing cached IP address information.
+    """
 
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
@@ -17,9 +19,11 @@ class IPCacheRepository:
         ip_data: IPInfo,
         raw_json: str,
     ) -> None:
-        """ """
+        """
+        Update existing IP record or create a new one in the cache.
+        """
         result = await self.session.execute(select(IPCache).where(IPCache.ip == ip_address))
-        ip_cache = result.scalar_one_or_none()
+        ip_cache: IPCache | None = result.scalar_one_or_none()
 
         if ip_cache:
             ip_cache.lat = ip_data.lat
@@ -44,7 +48,9 @@ class IPCacheRepository:
         await self.session.commit()
 
     async def get_location(self, ip_address: str) -> list[float] | None:
-        """ """
+        """
+        Retrieve latitude and longitude for a given IP address.
+        """
         stmt = select(IPCache.lat, IPCache.lon).where(IPCache.ip == ip_address)
         result = await self.session.execute(stmt)
         row = result.one_or_none()

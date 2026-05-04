@@ -1,14 +1,18 @@
 from typing import Any
 
-import requests
+import httpx
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
-from app.schemas import IPInfo
 from app.repositories import IPCacheRepository
+from app.schemas import IPInfo
 
 
 class IPInfoService:
+    """
+    Service to fetch and cache IP geolocation data.
+    """
+
     def __init__(
         self,
         ip_address: str,
@@ -18,13 +22,15 @@ class IPInfoService:
         self.url = settings.ip_info.url
         self.repo = IPCacheRepository(session)
 
-    @property
     async def get_info_ip(self) -> IPInfo:
-        response = requests.get(self.url.format(ip=self.ip))
+        """
+        Fetch IP details from API and save to cache.
+        """
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            response = await client.get(self.url.format(ip=self.ip))
+            response.raise_for_status()
+            data: dict[str, Any] = response.json()
 
-        response.raise_for_status()
-
-        data: dict[str, Any] = response.json()
         ip_info: IPInfo = IPInfo(
             country=data.get("country", "Unknown"),
             region=data.get("regionName", "Unknown"),

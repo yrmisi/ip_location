@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Header, status
+from fastapi import APIRouter, Header, HTTPException, status
 from fastapi.responses import FileResponse
 
 from app.dependencies import AsyncSessionDep
@@ -18,6 +18,9 @@ async def get_map(
     session: AsyncSessionDep,
     user_agent: Annotated[str | None, Header()] = None,
 ) -> FileResponse:
+    """
+    Generate an interactive map for the given IP and return it as a file.
+    """
     try:
         map_service: MapService = MapService(ip, user_agent, session)
         file_path: Path = await map_service.create_map

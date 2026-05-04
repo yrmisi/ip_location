@@ -8,6 +8,10 @@ from app.repositories import IPCacheRepository, UserRequestRepository
 
 
 class MapService:
+    """
+    Service for generating and saving interactive HTML maps.
+    """
+
     def __init__(
         self,
         ip: str,
@@ -21,6 +25,9 @@ class MapService:
 
     @property
     async def create_map(self) -> Path:
+        """
+        Generate a folium map, save it to disk, and log the user request.
+        """
         location = await self.repo_ip_cache.get_location(self.ip)
 
         if location is None:
@@ -54,6 +61,9 @@ class MapService:
         m: folium.Map,
         file_path: Path,
     ) -> None:
+        """
+        Add a custom favicon to the map and save it to the specified path.
+        """
         root = m.get_root()
         header = getattr(root, "header", None)
 
