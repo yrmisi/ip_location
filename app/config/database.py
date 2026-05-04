@@ -8,7 +8,9 @@ from .paths import ENVS_DIR
 
 
 class SQLAlchemyConfig(BaseModel):
-    """Configuration for SQLAlchemy."""
+    """
+    Configuration for SQLAlchemy.
+    """
 
     pool_pre_ping: bool = True
     pool_size: int = 5
@@ -17,14 +19,18 @@ class SQLAlchemyConfig(BaseModel):
 
 
 class SessionPollConfig(BaseModel):
-    """ """
+    """
+    Configuration for SQLAlchemy session behavior.
+    """
 
     autoflush: bool = False
     expire_on_commit: bool = False
 
 
 class DatabaseConfig(BaseSettings):
-    """Configuration for the database."""
+    """
+    Configuration for the database.
+    """
 
     drivername: str = "postgresql+asyncpg"
     user: Annotated[str, Field(alias="POSTGRES_USER")] = "user"
@@ -43,7 +49,9 @@ class DatabaseConfig(BaseSettings):
 
     @property
     def url_sqla_async(self) -> URL:
-        """Create async SQLAlchemy database URL."""
+        """
+        Create async SQLAlchemy database URL.
+        """
         return URL.create(
             drivername=self.drivername,
             username=self.user,

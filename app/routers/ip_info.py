@@ -3,9 +3,9 @@ from dataclasses import asdict
 from fastapi import APIRouter, HTTPException, status
 from requests.exceptions import HTTPError
 
+from app.dependencies import AsyncSessionDep
 from app.schemas import IPAddressRequest, IPInfo
 from app.services import IPInfoService
-from app.dependencies import AsyncSessionDep
 
 router = APIRouter(
     tags=["ip info"],
@@ -17,6 +17,9 @@ async def create_ip_info(
     request: IPAddressRequest,
     session: AsyncSessionDep,
 ) -> dict[str, str | float]:
+    """
+    Fetch geolocation data for a specific IP and store it in the database.
+    """
     try:
         ip_info_service: IPInfoService = IPInfoService(request.ip_address, session)
         ip_info: IPInfo = await ip_info_service.get_info_ip()

@@ -9,6 +9,10 @@ from app.schemas import IPInfo
 
 
 class IPInfoService:
+    """
+    Service to fetch and cache IP geolocation data.
+    """
+
     def __init__(
         self,
         ip_address: str,
@@ -19,6 +23,9 @@ class IPInfoService:
         self.repo = IPCacheRepository(session)
 
     async def get_info_ip(self) -> IPInfo:
+        """
+        Fetch IP details from API and save to cache.
+        """
         async with httpx.AsyncClient(timeout=5.0) as client:
             response = await client.get(self.url.format(ip=self.ip))
             response.raise_for_status()
